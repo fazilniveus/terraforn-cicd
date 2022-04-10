@@ -10,9 +10,11 @@ pipeline{
         terraform 'terraform'
     }
     stages{
-        stage('Initialize...'){
+        stage('checkout'){
             steps{
-                git branch: 'main', url: 'https://gitlab.com/eekngen/infras-prov-conf'
+                script{
+                    checkout
+                }
             }
         }
         stage('Provisioning infrastucture...'){
