@@ -12,7 +12,7 @@ pipeline{
     stages{
         stage('Initialize...'){
             steps{
-                git branch: 'main', credentialsId: 'gitlab', url: 'https://gitlab.com/eekngen/infras-prov-conf'
+                git branch: 'main', url: 'https://gitlab.com/eekngen/infras-prov-conf'
             }
         }
         stage('Provisioning infrastucture...'){
