@@ -1,0 +1,52 @@
+---
+  - name: docker setup
+    hosts: webapp
+    become: yes
+    remote_user: "{{ gcp_username }}"
+    vars_files:
+      - vars/default.yaml
+
+    tasks:
+      - name: update and upgrade apt packages
+        apt:
+          upgrade: yes
+          update_cache: yes
+          cache_valid_time: 86400 #One day
+    
+      - name: install dependencies
+        apt:
+          name: "{{ dep }}"
+          state: present
+          update_cache: yes
+      
+      - name: add GPG key
+        apt_key:
+          url:  https://download.docker.com/linux/ubuntu/gpg
+          state: present
+
+      - name: add docker repo
+        apt_repository:
+          repo: deb https://download.docker.com/linux/ubuntu bionic stable
+          state: present
+
+      - name: install docker and  docker-compose
+        apt:
+          name: "{{ cores }}"
+          state: latest
+          update_cache: yes
+
+      - name: install docker module for python
+        pip:
+          name: docker
+
+      - name: make sure docker running
+        service:
+          name: docker
+          state: started
+          enabled: yes
+
+      - name: add current user to docker group
+        user:
+          name: "{{ gcp_username }}"
+          groups: docker
+          append: yes
