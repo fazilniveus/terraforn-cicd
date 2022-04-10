@@ -3,6 +3,9 @@ pipeline{
     environment{
         PREFIX= 'terraform/'
     }
+    tools {
+        terraform 'terraform'
+    }
     stages{
         stage('Initialize...'){
             steps{
