@@ -16,13 +16,19 @@ pipeline{
                 }
             }
         }
-        stage('Provisioning infrastucture...'){
+        stage('Initialize'){
             steps{
-              
-                    
-                    sh 'terraform init'
-                    sh 'terraform  apply -auto-approve'
-             
+                sh 'terraform init'
+            }
+        }
+        stage('Plan'){
+            steps{
+                sh 'terraform plan'
+            }
+        }
+        stage('Apply'){
+            steps{
+                sh 'terraform apply -auto-approve'
             }
         }
         stage('Confgiure infrastucture...'){
