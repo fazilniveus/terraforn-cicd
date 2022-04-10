@@ -15,6 +15,7 @@ pipeline{
         stage('Provisioning infrastucture...'){
             steps{
                 script{
+                    sh 'cd terraforn-cicd'
                     sh 'terraform -chdir=$PREFIX init'
                     sh 'terraform -chdir=$PREFIX apply -auto-approve'
                 }
